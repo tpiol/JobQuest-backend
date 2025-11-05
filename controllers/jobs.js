@@ -53,4 +53,21 @@ router.put("/:jobId", verifyToken, async (req, res) => {
 	}
 });
 
+// DELETE routes
+router.delete("/:jobId", verifyToken, async (req, res) => {
+    try{
+        const job = await Job.findById(req.params.jobId);
+
+        if (!job.seeker.equals(req.user._id)) {
+            return res.status(403).send("You're not allowed to that!");
+        }
+        
+        const deletedJob = await Job.findByIdAndDelete(req.params.jobId);
+        res.status(200).json(deletedJob);
+
+    } catch (err) {
+        res.status(500).json({ err: err.message });
+    }
+})
+
 module.exports = router;
