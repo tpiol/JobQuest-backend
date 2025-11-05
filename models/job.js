@@ -67,6 +67,7 @@ const jobSchema = new mongoose.Schema({
 	notes: {
 		type: String,
 	},
+	seeker: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 
 const Job = mongoose.model("Job", jobSchema);
