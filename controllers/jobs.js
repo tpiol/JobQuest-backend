@@ -26,4 +26,12 @@ router.get("/", verifyToken, async (req, res) => {
   }
 })
 
+router.get("/:jobId", verifyToken, async (req, res) => {
+    try {
+    const job = await Job.findById(req.params.jobId)
+    res.status(200).json(job);
+    } catch (err) {
+    res.status(500).json({err: err.message })
+    }
+})
 module.exports = router;
